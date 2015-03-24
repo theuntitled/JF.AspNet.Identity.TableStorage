@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\JF.AspNet.Identity.TableStorage.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\JF.AspNet.Identity.TableStorage.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>theuntitled.ico</ApplicationIcon>
@@ -109,7 +111,11 @@
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <GetVersionNumber FileName="$(TargetPath)">
+      <Output TaskParameter="VersionString" ItemName="VersionString"></Output>
+    </GetVersionNumber>
+    <Exec Command="copy $(SolutionDir)nuspec.tpl $(SolutionDir)$(ProjectName).@(VersionString).nuspec" />
+  </Target>
 </Project>
